@@ -14,11 +14,17 @@
     <style>
         #viewer {
             position:relative
-            top:40px
+            padding-top: 50px;
+            padding-right: 30px;
+            padding-bottom: 50px;
+            padding-left: 80px;
         }
         #control {
             position:relative
-            top:40px
+            padding-top: 50px;
+            padding-right: 30px;
+            padding-bottom: 50px;
+            padding-left: 80px;
         }
     </style>
 
@@ -51,10 +57,10 @@
         </ul>
         <div class="clearfix"></div>
     </nav>
-    <iframe src="http://35.196.93.174:6080/vnc.html?host=35.196.93.174&port=6080" width="960" height="540" id="viewer">
+    <iframe src="http://35.196.93.174:8090" width="640" height="360" id="control">
         <p>iframes are not supported by your browser.</p>
     </iframe>
-    <iframe src="http://35.196.93.174:8090" width="640" height="360" id="control">
+    <iframe src="http://35.196.93.174:6080/vnc.html?host=35.196.93.174&port=6080" width="960" height="540" id="viewer">
         <p>iframes are not supported by your browser.</p>
     </iframe>
 </div>
