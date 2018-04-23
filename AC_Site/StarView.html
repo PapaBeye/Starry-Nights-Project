@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <title>The Starry Nights Project</title>
@@ -7,8 +7,7 @@
     <link href="style2.css" media="screen" rel="stylesheet" type="text/css" />
     <link href="iconic.css" media="screen" rel="stylesheet" type="text/css" />
     <script src="prefix-free.js"></script>
-    <link type="text/css" rel="stylesheet" href="/external/jquery-ui.css"/>
-    <link type="text/css" rel="stylesheet" href="style.css" />
+
 
     <style>
         #viewer {
@@ -43,20 +42,19 @@
 
     <nav>
         <ul class="menu">
-            <li><a href="Home.html"><span class="iconic home"></span> Home</a></li>
-            <li><a href="#"><span class="iconic plus-alt"></span> About Us</a>
-                <ul>
-                    <li><a href="AboutUs.html">About Us</a></li>
-                    <li><a href="LightPollution.html">Light Pollution</a></li>
-                </ul>
-            </li>
+            <li><a href="index.html"><span class="iconic home"></span> Home</a></li>
             <li><a href="#"><span class="iconic magnifying-glass"></span> Services</a>
                 <ul>
-                    <li><a href="#">Learn About the Issue</a></li>
-                    <li><a href="#">Learn About Dark sky Products</a></li>
+                    <li><a href="LightPollution.html">Learn About Light Pollution</a></li>
                     <li><a href="StarView.html">See The Stars</a></li>
                 </ul>
             </li>
+            <li><a href=""><span class="iconic plus-alt"></span> Dark Sky Products</a>
+                <ul>
+                    <li><a href="Darkskyproduct.html">Dark Sky Products</a></li>
+                </ul>
+            </li>
+
             <li><a href="#"><span class="iconic mail"></span> Contact</a>
                 <ul>
                     <li><a href="#">Contact Us</a></li>
@@ -73,6 +71,7 @@
     <iframe src="http://35.196.93.174:6080/vnc.html?host=35.196.93.174&port=6080" width="1020" height="720" id="viewer">
         <p>iframes are not supported by your browser.</p>
     </iframe>
+    <a href="http://35.196.93.174:6080/vnc.html?host=35.196.93.174&port=6080"><button type="button" value="View In Fullscreen" ></button></a>
 </div>
 
 </body>
