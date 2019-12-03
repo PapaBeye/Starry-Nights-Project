@@ -1,0 +1,461 @@
+<div id="glowscript" class="glowscript">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link type="text/css" href="https://s3.amazonaws.com/glowscript/css/redmond/2.1/jquery-ui.custom.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css" />
+<link type="text/css" href="https://s3.amazonaws.com/glowscript/css/ide.css" rel="stylesheet" />
+<script type="text/javascript" src="https://s3.amazonaws.com/glowscript/lib/jquery/2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://s3.amazonaws.com/glowscript/lib/jquery/2.1/jquery-ui.custom.min.js"></script>
+<script type="text/javascript" src="https://s3.amazonaws.com/glowscript/package/glow.2.9.min.js"></script>
+<script type="text/javascript" src="https://s3.amazonaws.com/glowscript/package/RSrun.2.9.min.js"></script>
+<script type="text/javascript"><!--//--><![CDATA[//><!--
+
+// START JAVASCRIPT
+;(function() {;
+var RS_modules = {};
+var ring_Radius, Q_ring, ptChargePOS, ElectricField, Scale, numberOFchargesInRing;
+RS_modules.pythonize = {};
+
+(function(){
+    function strings() {
+        var string_funcs, exclude, name;
+        string_funcs = set("capitalize strip lstrip rstrip islower isupper isspace lower upper swapcase center count endswith startswith find rfind index rindex format join ljust rjust partition rpartition replace split rsplit splitlines zfill".split(" "));
+        if (!arguments.length) {
+            exclude = (function(){
+                var s = RS_set();
+                s.jsset.add("split");
+                s.jsset.add("replace");
+                return s;
+            })();
+        } else if (arguments[0]) {
+            exclude = Array.prototype.slice.call(arguments);
+        } else {
+            exclude = null;
+        }
+        if (exclude) {
+            string_funcs = string_funcs.difference(set(exclude));
+        }
+        var RS_Iter0 = string_funcs;
+        RS_Iter0 = ((typeof RS_Iter0[Symbol.iterator] === "function") ? (RS_Iter0 instanceof Map ? RS_Iter0.keys() : RS_Iter0) : Object.keys(RS_Iter0));
+        for (var RS_Index0 of RS_Iter0) {
+            name = RS_Index0;
+            (RS_expr_temp = String.prototype)[(typeof name === "number" && name < 0) ? RS_expr_temp.length + name : name] = (RS_expr_temp = RS_str.prototype)[(typeof name === "number" && name < 0) ? RS_expr_temp.length + name : name];
+        }
+    };
+
+    RS_modules.pythonize.strings = strings;
+})();
+async function __main__() {
+    var version, box, sphere, simple_sphere, cylinder, pyramid, cone, helix, ellipsoid, ring, arrow, compound, display, vector, print, arange, type, scene, RS_ls, Q_ring, tpi, ptsList, Elist, ptChargePOS, ElectricField, Scale, numberOFchargesInRing, K, Tstate, scRun, d_theta, ring_Radius;
+    version = RS_list_decorate([ "2.9", "glowscript" ]);
+    Array.prototype['+']=function(r) {return this.concat(r)}
+    Array.prototype['*']=function(r) {return __array_times_number(this, r)}
+    window.__GSlang = "vpython";
+    box = vp_box;
+    sphere = vp_sphere;
+    simple_sphere = vp_simple_sphere;
+    cylinder = vp_cylinder;
+    pyramid = vp_pyramid;
+    cone = vp_cone;
+    helix = vp_helix;
+    ellipsoid = vp_ellipsoid;
+    ring = vp_ring;
+    arrow = vp_arrow;
+    compound = vp_compound;
+    display = canvas;
+    vector = vec;
+    print = GSprint;
+    arange = range;
+    type = pytype;
+    scene = canvas();
+    var strings = RS_modules.pythonize.strings;
+
+    strings();
+    "6";
+    RS_interpolate_kwargs.call(this, print_options, [RS_desugar_kwargs({width: 985, height: 300})]);
+    "7";
+    scene.width = 985;
+    "8";
+    scene.height = 500;
+    "9";
+    Q_ring = 0;
+    "10";
+    tpi = 2["*"](pi);
+    "11";
+    ptsList = RS_list_decorate([]);
+    "12";
+    Elist = RS_list_decorate([]);
+    "13";
+    ptChargePOS = vec(0, 0, 0);
+    "14";
+    ElectricField = vec(0, 0, 0);
+    "15";
+    Scale = .02;
+    "16";
+    numberOFchargesInRing = 2;
+    "17";
+    K = 9e9;
+    "18";
+    Tstate = false;
+    "19";
+    scRun = false;
+    "20";
+    d_theta = tpi["/"](100);
+    "21";
+    ;(await initInputs());
+    "22";
+    ring_Radius = .01;
+    "30";
+    async function simulate() {
+        var RS_ls, ob, ringobj, theta, d_theta, deltaQ, ptsList, Elist, ptcharge, d, EforEach, pts, i, pArrows, E, a, Earrow;
+        "31";
+        "32";
+        "33";
+        "34";
+        "35";
+        "36";
+        "37";
+        print("--------------------------Simulating------------------------------");
+        "38";
+        print("--------------------------Input Table-----------------------------");
+        "39";
+        print("Q = {}".format(Q_ring));
+        "40";
+        print("Positions of Point Charge = {}".format(ptChargePOS));
+        "41";
+        print("N for deltaQ = {}".format(numberOFchargesInRing));
+        "42";
+        print("Electric field scale = {}".format(Scale));
+        "43";
+        print("Ring Radius = {}".format(ring_Radius));
+        "44";
+        if (len(scene.objects)) {
+            "45";
+            var RS_Iter1 = scene.objects;
+            RS_Iter1 = ((typeof RS_Iter1[Symbol.iterator] === "function") ? (RS_Iter1 instanceof Map ? RS_Iter1.keys() : RS_Iter1) : Object.keys(RS_Iter1));
+            for (var RS_Index1 of RS_Iter1) {
+                ob = RS_Index1;
+                "46";
+                ob.visible = false;
+            }
+        }
+        "47";
+        ringobj = RS_interpolate_kwargs.call(this, ring, [RS_desugar_kwargs({pos: vector(0, 0, 0), axis: vector(1, 0, 0), radius: ring_Radius, thickness: ring_Radius["/"](10), color: color.red})]);
+        "48";
+        theta = 0;
+        "49";
+        d_theta = tpi["/"](numberOFchargesInRing);
+        "50";
+        deltaQ = Q_ring["/"](numberOFchargesInRing);
+        "51";
+        ptsList = RS_list_decorate([]);
+        "52";
+        Elist = RS_list_decorate([]);
+        "53";
+        ElectricField = vector(0, 0, 0);
+        "54";
+        while (theta["<"](tpi)) {
+            "55";
+            ptsList = ptsList["+"](RS_list_decorate([ RS_interpolate_kwargs.call(this, sphere, [RS_desugar_kwargs({pos: ring_Radius["*"](vector(0, cos(theta), sin(theta))), radius: ring_Radius["/"](8), color: color.green})]) ]));
+            "56";
+            theta = theta["+"](d_theta);
+        }
+        "57";
+        ptcharge = RS_interpolate_kwargs.call(this, sphere, [RS_desugar_kwargs({pos: ptChargePOS, radius: ring_Radius["/"](10), color: color.blue})]);
+        "58";
+        var RS_Iter2 = ptsList;
+        RS_Iter2 = ((typeof RS_Iter2[Symbol.iterator] === "function") ? (RS_Iter2 instanceof Map ? RS_Iter2.keys() : RS_Iter2) : Object.keys(RS_Iter2));
+        for (var RS_Index2 of RS_Iter2) {
+            pts = RS_Index2;
+            "59";
+            d = ptcharge.pos["-"](pts.pos);
+            "60";
+            if (RS_not_equals(d, vector(0, 0, 0))) {
+                "61";
+                EforEach = K["*"](deltaQ)["*"](norm(d))["/"](GS_power(mag(d), 2));
+                "62";
+                Elist = Elist["+"](RS_list_decorate([ (function(){
+                    var RS_d = {};
+                    RS_d[1] = pts.pos;
+                    RS_d[2] = Scale["/"](mag(EforEach))["*"](EforEach);
+                    return RS_d;
+                }).call(this) ]));
+                "63";
+                ElectricField = ElectricField["+"](EforEach);
+            }
+        }
+        "65";
+        i = 0;
+        "66";
+        pArrows = RS_list_decorate([]);
+        "67";
+        var RS_Iter3 = Elist;
+        RS_Iter3 = ((typeof RS_Iter3[Symbol.iterator] === "function") ? (RS_Iter3 instanceof Map ? RS_Iter3.keys() : RS_Iter3) : Object.keys(RS_Iter3));
+        for (var RS_Index3 of RS_Iter3) {
+            E = RS_Index3;
+            "68";
+            pArrows=pArrows["+"](RS_list_decorate([ (await createArrow(E)) ]));
+            "69";
+            if ((i === 0 || typeof i === "object" && RS_equals(i, 0))) {
+                "70";
+                ;(await sleep(2));
+            }
+            "71";
+            i=i["+"](1);
+        }
+        "72";
+        ;(await sleep(3));
+        "73";
+        var RS_Iter4 = pArrows;
+        RS_Iter4 = ((typeof RS_Iter4[Symbol.iterator] === "function") ? (RS_Iter4 instanceof Map ? RS_Iter4.keys() : RS_Iter4) : Object.keys(RS_Iter4));
+        for (var RS_Index4 of RS_Iter4) {
+            a = RS_Index4;
+            "74";
+            a.clear_trail();
+            "75";
+        }
+        if (RS_equals(ptcharge.pos, vector(0, 0, 0))) {
+            "76";
+            ElectricField = vector(0, 0, 0);
+        }
+        "77";
+        Earrow = RS_interpolate_kwargs.call(this, arrow, [RS_desugar_kwargs({pos: ptcharge.pos, axis: Scale["/"](mag(ElectricField))["*"](ElectricField), color: color.purple, shaftwidth: float(ring_Radius["/"](10))})]);
+        "78";
+        print("----- Electric Field Magnitude: {}".format(mag(ElectricField)));
+        "79";
+        print("----- Electric Field Direction: {}  --(unit vector in the direction of Electric field vector)".format(ElectricField.norm()));
+    };
+
+    "83";
+    async function initInputs() {
+        var RS_ls, Q_ring_Entry, Radius_Entry, N_Entry, ptChargePOS_Entry, Escale_Label, Escale_Entry, b;
+        "84";
+        RS_interpolate_kwargs.call(this, wtext, [RS_desugar_kwargs({pos: scene.caption_anchor, text: "Enter Charge Q for Ring"})]);
+        "85";
+        scene.append_to_caption(" ");
+        ;(await sleep(.2));
+        "86";
+        Q_ring_Entry = RS_interpolate_kwargs.call(this, winput, [RS_desugar_kwargs({pos: scene.caption_anchor, bind: setQring})]);
+        "87";
+        scene.append_to_caption(" ");
+        "88";
+        RS_interpolate_kwargs.call(this, wtext, [RS_desugar_kwargs({pos: scene.caption_anchor, text: "Enter Radius for ring"})]);
+        "89";
+        scene.append_to_caption(" ");
+        ;(await sleep(.2));
+        "90";
+        Radius_Entry = RS_interpolate_kwargs.call(this, winput, [RS_desugar_kwargs({pos: scene.caption_anchor, bind: setRring})]);
+        "91";
+        RS_interpolate_kwargs.call(this, wtext, [RS_desugar_kwargs({pos: scene.caption_anchor, text: "Enter N for Delta Q (Q / N)"})]);
+        "92";
+        scene.append_to_caption(" ");
+        ;(await sleep(.2));
+        "93";
+        N_Entry = RS_interpolate_kwargs.call(this, winput, [RS_desugar_kwargs({pos: scene.caption_anchor, bind: setNchar})]);
+        "94";
+        scene.append_to_caption("\n");
+        "95";
+        RS_interpolate_kwargs.call(this, wtext, [RS_desugar_kwargs({pos: scene.caption_anchor, text: "Enter Position for Point Charge"})]);
+        "96";
+        scene.append_to_caption(" ");
+        ;(await sleep(.2));
+        "97";
+        ptChargePOS_Entry = RS_interpolate_kwargs.call(this, winput, [RS_desugar_kwargs({pos: scene.caption_anchor, type: "string", bind: setPtchar})]);
+        "98";
+        scene.append_to_caption(" ");
+        "99";
+        Escale_Label = RS_interpolate_kwargs.call(this, wtext, [RS_desugar_kwargs({pos: scene.caption_anchor, text: "Enter E Scale for Q"})]);
+        "100";
+        scene.append_to_caption(" ");
+        ;(await sleep(.2));
+        "101";
+        Escale_Entry = RS_interpolate_kwargs.call(this, winput, [RS_desugar_kwargs({pos: scene.caption_anchor, bind: setEscale})]);
+        "102";
+        scene.append_to_caption(" ");
+        "103";
+        b = RS_interpolate_kwargs.call(this, button, [RS_desugar_kwargs({bind: simulate, text: "Submit!"})]);
+    };
+
+    "106";
+    async function createArrow(d) {
+        "107";
+        return RS_interpolate_kwargs.call(this, arrow, [RS_desugar_kwargs({pos: d[1], axis: d[2], color: color.cyan, shaftwidth: float(ring_Radius["/"](10))})]);
+    };
+    if (!createArrow.__argnames__) Object.defineProperties(createArrow, {
+        __argnames__ : {value: ["d"]}
+    });
+
+    "108";
+    async function setQring(S) {
+        "109";
+        "110";
+        if (S.number) {
+            "111";
+            Q_ring = S.number;
+            "112";
+            print("Q = {}".format(Q_ring));
+            "113";
+        } else {
+            "114";
+            print("Invalid Input");
+        }
+    };
+    if (!setQring.__argnames__) Object.defineProperties(setQring, {
+        __argnames__ : {value: ["S"]}
+    });
+
+    "115";
+    async function setPtchar(S) {
+        var RS_ls, ptsQ;
+        "116";
+        "118";
+        if (S.text) {
+            "119";
+            try {
+                "120";
+                ptsQ = str(S.text);
+                "121";
+                ptChargePOS = vector(float(ptsQ.split(",")[0]), float(ptsQ.split(",")[1]), float(ptsQ.split(",")[2]));
+                "122";
+                print("Positions of Point Charge = {}".format(ptChargePOS));
+                "123";
+            } catch (RS_Exception) {
+                RS_last_exception = RS_Exception;
+                if (RS_Exception instanceof Error) {
+                    var e = RS_Exception;
+                    "124";
+                    print("Please Enter position of Point charge in form of x,y,z  -Decimals points are allowed");
+                    "125";
+                } else {
+                    throw RS_Exception;
+                }
+            }
+        } else {
+            "126";
+            ptChargePOS = vector(0, 0, 0);
+            "127";
+            print("Positions of Point Charge = {}".format(ptChargePOS));
+        }
+    };
+    if (!setPtchar.__argnames__) Object.defineProperties(setPtchar, {
+        __argnames__ : {value: ["S"]}
+    });
+
+    "128";
+    async function setNchar(S) {
+        "129";
+        "130";
+        if (S.number) {
+            "131";
+            try {
+                "132";
+                numberOFchargesInRing = int(S.number);
+                "133";
+                print("N for deltaQ = {}".format(numberOFchargesInRing));
+                "134";
+            } catch (RS_Exception) {
+                RS_last_exception = RS_Exception;
+                if (RS_Exception instanceof Error) {
+                    var e = RS_Exception;
+                    "135";
+                    numberOFchargesInRing = 2;
+                    "136";
+                    print("N for deltaQ is set to {}".format(numberOFchargesInRing));
+                    "137";
+                    print("Please Enter a numberto change this value");
+                    "138";
+                } else {
+                    throw RS_Exception;
+                }
+            }
+        } else {
+            "139";
+            numberOFchargesInRing = 2;
+            "140";
+            print("N for deltaQ is set to {}".format(numberOFchargesInRing));
+        }
+    };
+    if (!setNchar.__argnames__) Object.defineProperties(setNchar, {
+        __argnames__ : {value: ["S"]}
+    });
+
+    "141";
+    async function setEscale(S) {
+        "142";
+        "143";
+        if (S.number) {
+            "144";
+            try {
+                "145";
+                Scale = float(S.number);
+                "146";
+                print("Electric field scale = {}".format(Scale));
+                "147";
+            } catch (RS_Exception) {
+                RS_last_exception = RS_Exception;
+                if (RS_Exception instanceof Error) {
+                    var e = RS_Exception;
+                    "148";
+                    print("Please Enter a number");
+                    "149";
+                } else {
+                    throw RS_Exception;
+                }
+            }
+        } else {
+            "150";
+            Scale = .02;
+            "151";
+            print("Electric field scale = {}".format(Scale));
+        }
+    };
+    if (!setEscale.__argnames__) Object.defineProperties(setEscale, {
+        __argnames__ : {value: ["S"]}
+    });
+
+    "152";
+    async function setRring(S) {
+        "153";
+        "154";
+        if (S.number) {
+            "155";
+            try {
+                "156";
+                ring_Radius = float(S.number);
+                "157";
+                print("Ring Radius = {}".format(ring_Radius));
+                "158";
+            } catch (RS_Exception) {
+                RS_last_exception = RS_Exception;
+                if (RS_Exception instanceof Error) {
+                    var e = RS_Exception;
+                    "159";
+                    ring_Radius = .01;
+                    "160";
+                    print("Ring Radius = {}".format(ring_Radius));
+                    "161";
+                    print("Please Enter a number to change Ring Radius");
+                    "162";
+                } else {
+                    throw RS_Exception;
+                }
+            }
+        } else {
+            "163";
+            ring_Radius = .01;
+            "164";
+            print("Ring Radius = {}".format(ring_Radius));
+            "165";
+            print("Please Enter a number to change Ring Radius");
+        }
+    };
+    if (!setRring.__argnames__) Object.defineProperties(setRring, {
+        __argnames__ : {value: ["S"]}
+    });
+
+};
+
+;$(function(){ window.__context = { glowscript_container: $("#glowscript").removeAttr("id") }; __main__() })})()
+// END JAVASCRIPT
+
+//--><!]]></script>
+</div>
